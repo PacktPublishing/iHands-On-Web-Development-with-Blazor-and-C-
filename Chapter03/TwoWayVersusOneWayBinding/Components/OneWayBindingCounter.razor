@@ -1,0 +1,20 @@
+<div style="padding:10px;text-align:center;border:solid 3px blue;border-radius:20px;">
+	<h2>@Name</h2>
+	<p>Current number: <span>@CurrentNumber</span></p>
+	<button @onclick="Increment">Increment</button>
+</div>
+
+@code{
+
+	[Parameter]
+	public string Name { get; set; }
+
+	[Parameter]
+	public int CurrentNumber { get; set; }
+
+	public void Increment()
+	{
+		this.CurrentNumber += 1;
+	}
+
+}

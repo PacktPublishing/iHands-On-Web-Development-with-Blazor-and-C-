@@ -1,0 +1,53 @@
+@page "/"
+
+<table>
+    <tbody>
+        <tr>
+            <td width="50%">
+                <p>One-Way binding current number: <span style="color:green">Works</span>.</p>
+                <p>Binding: One-Way</p>
+                <p>Current cnumber: <b>@OneWayBindingCurrentNumber</b></p>
+                <OneWayBindingCounter Name="One-Way binding counter's component" CurrentNumber="@OneWayBindingCurrentNumber" />
+            </td>
+            <td width="50%">
+                <p>Two-Way binding current number: <span style="color:green">Works</span>.</p>
+                <p>Binding: Two-Way</p>
+                <p>Current cnumber: <b>@TwoWayBindingCurrentNumber</b></p>
+                <TwoWayBindingCounter Name="Two-Way binding counter's component" @bind-CurrentNumber="TwoWayBindingCurrentNumber" />
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top:10px;">
+                <p>One-Way binding on the two-way binding's counter component: <span style="color:green">Works</span>.</p>
+                <p>Binding: One-Way</p>
+                <p>Current number: <span>@OneWayBindingOnOneTwoWayBindingComponentCurrentNumber</span></p>
+                <TwoWayBindingCounter Name="One-Way binding on the two-way binding's counter component" CurrentNumber="@OneWayBindingOnOneTwoWayBindingComponentCurrentNumber" />
+            </td>
+            <td style="padding-top:10px;">
+                <!--
+                    <p>Current number: <span>@TwoWayBindingOnOneWayBindingComponentCurrentNumber</span></p>
+                <OneWayBindingCounter Name="Two-Way binding on the one-way binding's counter component" @bind-CurrentNumber="TwoWayBindingOnOneWayBindingComponentCurrentNumber" />
+                -->
+                <p>Two-Way binding on the one-way binding's counter component: <span style="color:red">Runtime exception</span>.</p>
+                <br /><p>
+                    <i>
+                        blazor.webassembly.js:1 WASM: Unhandled exception rendering component:
+                        blazor.webassembly.js:1 WASM: System.InvalidOperationException: Object of type 'TwoWayVersusOneWayBinding.Components.OneWayBindingCounter' does not have a property matching the name 'CurrentNumberChanged'.
+                </i></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+
+    public int OneWayBindingCurrentNumber = 15;
+
+    public int TwoWayBindingCurrentNumber = 15;
+
+    public int OneWayBindingOnOneTwoWayBindingComponentCurrentNumber = 15;
+
+    // Not need, we cannot call the component.
+    //public int TwoWayBindingOnOneWayBindingComponentCurrentNumber = 15;
+
+}
