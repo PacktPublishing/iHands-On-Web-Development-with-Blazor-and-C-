@@ -1,0 +1,13 @@
+@page "/"
+@inherits IndexBase
+
+<h1>@Title</h1>
+<p>@Message</p>
+
+<p>You clicked @NumberOfClicks on the button.</p>
+
+@if(NumberOfClicks > 25){
+    <b>Oh my god! You love clicking on buttons!</b><br><p>I like it too! :)</p>
+}
+
+<button @onclick="IncrementNumberOfClicks">Count this click!</button>

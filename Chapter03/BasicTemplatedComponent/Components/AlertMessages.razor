@@ -1,0 +1,14 @@
+@typeparam TItem
+
+@foreach(var message in AlertMessageList)
+{
+    <AlertMessage>@AlertMessageTemplate(message)</AlertMessage>
+}
+
+@code{
+    [Parameter]
+    public IReadOnlyList<TItem> AlertMessageList {get;set;}
+
+    [Parameter]
+    public RenderFragment<TItem> AlertMessageTemplate {get;set;}
+}

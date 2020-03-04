@@ -1,0 +1,35 @@
+@page "/"
+
+<input type="text" @bind="currentMessage" placeholder="Enter a message here." />
+<button @onclick="AddMessage">Add a message</button>
+
+<hr />
+
+<!-- If we don't specify a variable name for our objects which are listed, they are accessible under the name 'context' -->
+<!-- The type of TItem is infered by the .NET Framework but you could have specify it using  TItem="string" -->
+<AlertMessages AlertMessageList="messages">
+    <AlertMessageTemplate>
+        <u>This is an alert:</u> @context
+    </AlertMessageTemplate>
+</AlertMessages>
+
+<hr />
+
+<AlertMessages AlertMessageList="messages" Context="message">
+    <AlertMessageTemplate>
+        <u>This is an alert:</u> @message
+    </AlertMessageTemplate>
+</AlertMessages>
+
+@code
+{
+    List<string> messages = new List<string>();
+
+    protected string currentMessage {get;set;}
+
+    public void AddMessage()
+    {
+        messages.Add(this.currentMessage);
+        currentMessage = null;
+    }
+}

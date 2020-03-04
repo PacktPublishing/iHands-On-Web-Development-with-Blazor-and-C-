@@ -1,0 +1,27 @@
+@typeparam TItem
+
+@HeaderContent
+
+@foreach(var message in AlertMessageList)
+{
+    <AlertMessage>@AlertMessageTemplate(message) <i><u>provided by @MessagesProvider</u></i></AlertMessage>
+}
+
+@FooterContent
+
+@code{
+    [Parameter]
+    public IReadOnlyList<TItem> AlertMessageList {get;set;}
+
+    [Parameter]
+    public RenderFragment<TItem> AlertMessageTemplate {get;set;}
+
+    [Parameter]
+    public RenderFragment HeaderContent {get;set;}
+
+    [Parameter]
+    public RenderFragment FooterContent {get;set;}
+
+    [Parameter]
+    public string MessagesProvider{get;set;}
+}

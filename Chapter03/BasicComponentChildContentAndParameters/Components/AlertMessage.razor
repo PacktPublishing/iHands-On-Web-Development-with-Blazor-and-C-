@@ -1,0 +1,12 @@
+<div style="width:50%;height:auto;margin:10px auto;padding:20px;text-align:center;border:solid 3px #FF0000;border-radius:20px;font-style:italic;">
+	<h2>@Title</h2>
+	@ChildContent
+</div>
+
+@code{
+	[Parameter]
+	public string Title { get; set; }
+
+	[Parameter]
+	public RenderFragment ChildContent {get;set;}
+}

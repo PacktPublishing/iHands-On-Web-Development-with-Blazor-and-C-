@@ -1,0 +1,15 @@
+@page "/"
+
+<CascadingValue Name="Title" Value="@Title" IsFixed="true">
+    <CascadingValue Name="Content" Value="@Content" IsFixed="true">
+        <AlertMessage />
+    </CascadingValue>
+</CascadingValue>
+
+@code{
+
+    public string Title = "This is the title from the parent component";
+
+    public string Content = "This is the content of the message, from the parent component";
+
+}

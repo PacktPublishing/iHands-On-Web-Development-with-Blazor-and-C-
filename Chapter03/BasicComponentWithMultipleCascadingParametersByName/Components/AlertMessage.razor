@@ -1,0 +1,12 @@
+<h2>@Title</h2>
+<p>@Content</p>
+
+@code{
+
+    [CascadingParameter(Name = "Title")]
+    protected string Title { get; set; }
+    
+    [CascadingParameter(Name = "Content")]
+    protected string Content { get; set; }
+
+}

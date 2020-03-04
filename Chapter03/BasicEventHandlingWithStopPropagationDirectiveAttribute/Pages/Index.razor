@@ -1,0 +1,92 @@
+@page "/"
+
+<hr />
+
+<ul>
+@foreach(var vnt in events)
+{
+    <li>@vnt</li>
+}
+</ul>
+
+<hr />
+
+<div @onclick="@(a => HandleEvent(a))" id="div1">
+    <div @onclick="@(b => HandleEvent(b))" id="div2">
+        <div @onclick="@(c => HandleEvent(c))" @onclick:stopPropagation id="div3">
+
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div @onclick="@(a => HandleEvent(a))" @onclick:stopPropagation="false" id="div4">
+    <div @onclick="@(b => HandleEvent(b))" @onclick:stopPropagation="false" id="div5">
+        <div @onclick="@(c => HandleEvent(c))" @onclick:stopPropagation="true" id="div6">
+
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div @onclick="@(a => HandleEvent(a))" @onclick:stopPropagation="stopPropagationFromDiv7" id="div7">
+    <div @onclick="@(b => HandleEvent(b))" @onclick:stopPropagation="stopPropagationFromDiv8" id="div8">
+        <div @onclick="@(c => HandleEvent(c))" @onclick:stopPropagation="stopPropagationFromDiv9" id="div9">
+
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div @onclick="HandleEvent" id="div10">
+    <div @onclick="HandleEvent" id="div11">
+        <div @onclick="HandleEvent" @onclick:stopPropagation id="div12">
+
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    private List<string> events = new List<string>();
+
+    private bool stopPropagationFromDiv7 = false;
+
+    private bool stopPropagationFromDiv8 = false;
+
+    private bool stopPropagationFromDiv9 = false;
+    
+    public void HandleEvent(MouseEventArgs e)
+    {
+        string eventDescription = DateTime.Now + " - Click on position: " + e.ClientX + "/" + e.ClientY;
+        this.events.Add(eventDescription);
+        Console.Write(eventDescription);
+    }
+
+}
+
+<style type="text/css">
+div#div1,div#div4,div#div7,div#div10{
+    width:200px;
+    height:250px;
+    padding:20px;
+    background-color:aqua;
+}
+div#div2,div#div5,div#div8,div#div11{
+    width:150px;
+    height:200px;
+    margin:15px;
+    padding:20px;
+    background-color:burlywood;
+}
+div#div3,div#div6,div#div9,div#div12{
+    width:50px;
+    height:50px;
+    margin:15px;
+    background-color:aquamarine;
+}
+</style>

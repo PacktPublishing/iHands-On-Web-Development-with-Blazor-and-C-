@@ -1,0 +1,17 @@
+<hr />
+<input @bind="message" disabled>
+
+@inject IJSRuntime JS
+@code{
+
+	public string message { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender){
+            this.message = await JS.InvokeAsync<string>("exampleJsFunctions.showPrompt", "Enter a text:");
+            StateHasChanged();
+        }
+    }
+
+}

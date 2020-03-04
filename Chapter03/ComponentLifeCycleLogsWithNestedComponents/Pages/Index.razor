@@ -1,0 +1,90 @@
+@page "/"
+
+<h1>Call stack</h1>
+<!-- We use the variable "welcomeMessage" to avoid warnings at the build. -->
+<i>@welcomeMessage</i>
+<button @onclick="ChangeState">Click to change the state</button>
+
+<Counter></Counter>
+
+
+@code{
+
+    private string welcomeMessage = null;
+
+    public void ChangeState()
+    {
+        
+    }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        string message = "Counter.razor ==> SetParametersAsync method was called";
+        Console.WriteLine(message);
+
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        string message = "Index.razor ==> OnInitialized method was called";
+        Console.WriteLine(message);
+
+        base.OnInitialized();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        string message = "Index.razor ==> OnInitializedAsync method was called";
+        Console.WriteLine(message);
+
+        await base.OnInitializedAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        string message = "Index.razor ==> OnParametersSet method was called";
+        Console.WriteLine(message);
+
+        base.OnParametersSet();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        string message = "Index.razor ==> OnParametersSetAsync method was called";
+        Console.WriteLine(message);
+
+        await base.OnParametersSetAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        string message = "Index.razor ==> OnAfterRender method was called. First render: " + firstRender;
+        Console.WriteLine(message);
+
+        if(firstRender)
+        {
+            this.welcomeMessage = "Open the browser console log to see the call stack.";
+            StateHasChanged();
+        }
+
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        string message = "Index.razor ==> OnAfterRenderAsync method was called. First render: " + firstRender;
+        Console.WriteLine(message);
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected override bool ShouldRender()
+    {
+        string message = "Index.razor ==> ShouldRender method was called.";
+        Console.WriteLine(message);
+
+        return base.ShouldRender();
+    }
+
+}

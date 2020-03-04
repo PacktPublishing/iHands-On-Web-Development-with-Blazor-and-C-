@@ -1,0 +1,29 @@
+@page "/"
+
+<p>The start number is: @StartNumber</p>
+<br /><button @onclick="Increment">Increment</button>
+<hr />
+<CascadingValue Value="@StartNumber">
+    <Counter Title="Index's child #1"></Counter>
+    <Counter Title="Index's child #2"></Counter>
+</CascadingValue>
+
+@code{
+
+     protected int StartNumber = 10;
+
+    public void Increment()
+    {
+        this.StartNumber += 1;
+    }
+
+}
+
+<style type="text/css">
+div.counter-wrapper{
+    border:solid 1px orange;
+    padding:7px;
+    clear:both;
+    margin:10px;
+}
+</style>

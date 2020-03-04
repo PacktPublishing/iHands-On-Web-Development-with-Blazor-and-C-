@@ -1,0 +1,21 @@
+@page "/"
+
+<h2>Component called with parameters:</h2>
+<AlertMessage title="This is a title" messageType="info" content="this is an information message"
+ authorMessage="This is a message from the author" anotherKey="Another value" />
+
+<h2>Component called with attribute splatting:</h2>
+<AlertMessage @attributes="attributeSplattingParameters" />
+
+@code{
+
+    private IReadOnlyDictionary<string, object> attributeSplattingParameters = new Dictionary<string, object>()
+    {
+        { "messageType", "warning" },
+        { "title", "Title from attribute splatting" },
+        { "content", "Content from attribute splatting" },
+        { "authorMessage", "This is a message from the autor" },
+        { "anotherKey", "another value" },
+        { "key", "value" }
+    };
+}

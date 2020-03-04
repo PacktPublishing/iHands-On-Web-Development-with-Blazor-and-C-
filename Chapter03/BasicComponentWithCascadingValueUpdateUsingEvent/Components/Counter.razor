@@ -1,0 +1,22 @@
+<div class="counter-wrapper">
+    <b>@Title</b>
+    <br /><span>@CurrentNumber</span>
+    <br /><button @onclick="Increment">Increment</button>
+</div>
+
+@code{
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [CascadingParameter]
+    public int CurrentNumber { get; set; }
+
+    [Parameter] public Action OnIncrement { get; set; }
+
+    public void Increment()
+    {
+        this.OnIncrement.Invoke();
+    }
+
+}

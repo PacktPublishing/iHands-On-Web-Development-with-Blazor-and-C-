@@ -1,0 +1,90 @@
+@page "/"
+
+<h1>Call stack</h1>
+<i>You won't see anything after the DOM is rendered. To see all the events display the browser console's log dialog.</i>
+
+<ul>
+@foreach(var callStackEntry in this.callStack)
+{
+    <li>@callStackEntry</li>
+}
+</ul>
+
+@code{
+
+    private IList<string> callStack = new List<string>();
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        string message = "SetParametersAsync method was called";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        string message = "OnInitialized method was called";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        base.OnInitialized();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        string message = "OnInitializedAsync method was called";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        await base.OnInitializedAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        string message = "OnParametersSet method was called";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        base.OnParametersSet();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        string message = "OnParametersSetAsync method was called";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        await base.OnParametersSetAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        string message = "OnAfterRender method was called. First render: " + firstRender;
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        string message = "OnAfterRenderAsync method was called. First render: " + firstRender;
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+
+    protected override bool ShouldRender()
+    {
+        string message = "ShouldRender method was called.";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        return base.ShouldRender();
+    }
+
+}

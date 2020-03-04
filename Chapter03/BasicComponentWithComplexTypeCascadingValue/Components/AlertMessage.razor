@@ -1,0 +1,13 @@
+
+<div>
+    <h2>@this.Message.Title</h2>
+    <p>@this.Message.Content</p>
+    <br /><i>@this.Message.Date.ToShortDateString()</i>
+</div>
+
+@code {
+
+    [CascadingParameter]
+    public AlertMessageModel Message {get;set;}
+
+}

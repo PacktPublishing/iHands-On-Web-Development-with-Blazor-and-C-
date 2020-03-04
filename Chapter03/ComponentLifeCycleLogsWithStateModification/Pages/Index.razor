@@ -1,0 +1,105 @@
+@page "/"
+
+<h1>Call stack</h1>
+<!-- We use the variable "welcomeMessage" to avoid warnings at the build. -->
+<i>@welcomeMessage</i>
+<button @onclick="ChangeState">Click to change the state</button>
+
+<ul>
+@foreach(var callStackEntry in this.callStack)
+{
+    <li>@callStackEntry</li>
+}
+</ul>
+
+@code{
+
+    private IList<string> callStack = new List<string>();
+
+    private string welcomeMessage = null;
+
+    public void ChangeState()
+    {
+        
+    }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        string message = "SetParametersAsync method was called";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        string message = "OnInitialized method was called";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        base.OnInitialized();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        string message = "OnInitializedAsync method was called";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        await base.OnInitializedAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        string message = "OnParametersSet method was called";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        base.OnParametersSet();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        string message = "OnParametersSetAsync method was called";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        await base.OnParametersSetAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        string message = "OnAfterRender method was called. First render: " + firstRender;
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        if(firstRender)
+        {
+            this.welcomeMessage = "Welcome here.";
+            StateHasChanged();
+        }
+
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        string message = "OnAfterRenderAsync method was called. First render: " + firstRender;
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+
+    protected override bool ShouldRender()
+    {
+        string message = "ShouldRender method was called.";
+        Console.WriteLine(message);
+        this.callStack.Add(message);
+
+        return base.ShouldRender();
+    }
+
+}

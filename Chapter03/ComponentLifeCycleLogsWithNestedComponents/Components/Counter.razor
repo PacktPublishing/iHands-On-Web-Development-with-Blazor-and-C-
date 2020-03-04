@@ -1,0 +1,90 @@
+<p>
+    Counter: <b>@currentNumber</b>
+</p>
+<button @onclick="Increment">Increment</button>
+
+@code{
+    private int currentNumber ;
+
+    private void Increment()
+    {
+        this.currentNumber+=1;
+    }
+
+    public void ChangeState()
+    {
+        
+    }
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        string message = "Counter.razor ==> SetParametersAsync method was called";
+        Console.WriteLine(message);
+
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        string message = "Counter.razor ==> OnInitialized method was called";
+        Console.WriteLine(message);
+
+        base.OnInitialized();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        string message = "Counter.razor ==> OnInitializedAsync method was called";
+        Console.WriteLine(message);
+
+        await base.OnInitializedAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        string message = "Counter.razor ==> OnParametersSet method was called";
+        Console.WriteLine(message);
+
+        base.OnParametersSet();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        string message = "Counter.razor ==> OnParametersSetAsync method was called";
+        Console.WriteLine(message);
+
+        await base.OnParametersSetAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        string message = "Counter.razor ==> OnAfterRender method was called. First render: " + firstRender;
+        Console.WriteLine(message);
+
+        if(firstRender)
+        {
+            this.currentNumber = 0;
+            StateHasChanged();
+        }
+
+        base.OnAfterRender(firstRender);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        string message = "Counter.razor ==> OnAfterRenderAsync method was called. First render: " + firstRender;
+        Console.WriteLine(message);
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+
+    protected override bool ShouldRender()
+    {
+        string message = "Counter.razor ==> ShouldRender method was called.";
+        Console.WriteLine(message);
+
+        return base.ShouldRender();
+    }
+
+}

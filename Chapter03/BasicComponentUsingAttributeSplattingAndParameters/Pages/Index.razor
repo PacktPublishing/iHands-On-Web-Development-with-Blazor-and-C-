@@ -1,0 +1,33 @@
+@page "/"
+
+<h2>Component called with parameters:</h2>
+<AlertMessage MessageType="info" Title="This is a message" Content="This is my message content."  />
+<br /><hr />
+<h2>Component called with attribute splatting:</h2>
+<AlertMessage @attributes="attributeSplattingParameters" />
+<br /><hr />
+<h2>Components called by merging parameters and attribute splatting:</h2>
+<AlertMessage MessageType="error" @attributes="attributeSplattingParameters" Title="This is the title from the parameter" />
+<AlertMessage Title="This is the title from the parameter" @attributes="attributeSplattingParameters" MessageType="error" />
+<br /><hr />
+<h2>Component called with a partial attribute splatting collection (the title is missing):</h2>
+<AlertMessage @attributes="partialAttributeSplattingParameters" />
+
+@code{
+
+    // I'm using a IReadOnlyDictionary here but some other types would also have worked.
+    // Types used for attribute splatting must implement 'IEnumerable<KeyValuePair<string, object>>'.
+    private IReadOnlyDictionary<string, object> attributeSplattingParameters = new Dictionary<string, object>()
+    {
+        { "messageType", "warning" },
+        { "title", "Title from attribute splatting" },
+        { "content", "Content from attribute splatting" }
+    };
+
+    private IReadOnlyDictionary<string, object> partialAttributeSplattingParameters = new Dictionary<string, object>()
+    {
+        { "messageType", "warning" },
+        //{ "title", "Title from attribute splatting" }, No title in this collection.
+        { "content", "Content from attribute splatting" }
+    };
+}

@@ -1,0 +1,8 @@
+@page "/"
+
+<AlertMessage @attributes="@(new Dictionary<string, object>()
+    {
+        { "messageType", "warning" },
+        { "title", "Title from attribute splatting" },
+        { "content", "Content from attribute splatting" }
+    })" />

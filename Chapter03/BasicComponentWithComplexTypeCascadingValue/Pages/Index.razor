@@ -1,0 +1,17 @@
+@page "/"
+
+<CascadingValue Value="@Message">
+    <AlertMessage></AlertMessage>
+</CascadingValue>
+
+@code{
+
+    public AlertMessageModel Message = new AlertMessageModel
+    {
+        Title = "Title",
+        Content = "Content",
+        Date = DateTime.Now
+    };
+
+}
+

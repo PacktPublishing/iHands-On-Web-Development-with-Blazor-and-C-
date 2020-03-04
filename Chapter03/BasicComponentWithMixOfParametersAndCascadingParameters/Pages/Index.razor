@@ -1,0 +1,13 @@
+@page "/"
+
+<CascadingValue Value="@CurrentDate">
+    <AlertMessage Title="@Title" />
+</CascadingValue>
+
+@code{
+
+    public string Title = "This is the title from the parent component";
+
+    public DateTime CurrentDate = DateTime.Now;
+
+}

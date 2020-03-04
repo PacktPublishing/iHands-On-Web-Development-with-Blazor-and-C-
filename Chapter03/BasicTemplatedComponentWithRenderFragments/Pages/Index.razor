@@ -1,0 +1,27 @@
+@page "/"
+
+<input type="text" @bind="currentMessage" placeholder="Enter a message here." />
+<button @onclick="AddMessage">Add a message</button>
+
+<hr />
+
+<AlertMessages AlertMessageList="messages" Context="message" TItem="string" MessagesProvider="Adrien Torris">
+    <HeaderContent><i>This is a header.</i></HeaderContent>
+    <AlertMessageTemplate>
+        <u>This is an alert:</u> @message
+    </AlertMessageTemplate>
+    <FooterContent><i>This is a footer.</i></FooterContent>
+</AlertMessages>
+
+@code
+{
+    List<string> messages = new List<string>();
+
+    protected string currentMessage {get;set;}
+
+    public void AddMessage()
+    {
+        messages.Add(this.currentMessage);
+        currentMessage = null;
+    }
+}

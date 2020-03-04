@@ -1,0 +1,134 @@
+﻿@page "/"
+@inject HttpClient Http
+@implements IDisposable
+
+<h1>@title</h1>
+<i>Number of changes: @nbChanges</i>
+<p>You have to manually update the component to see the items added by the timer.</p>
+<button @onclick="InvertTimerStateHasChanged">@refreshComponentsByTimerButtonText</button>
+<hr />
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr colspan="4">
+                <button @onclick="AddForecast">Click to add data (without state changes)</button>
+                <button @onclick="AddForecastWithStateHasChanged">Click to add data (with state changes)</button>
+            </tr>
+        </tfoot>
+    </table>
+}
+
+@code {
+    private string title = "Weather forecast";
+
+    private int nbChanges = 0;
+
+    private IList<WeatherForecast> forecasts;
+        
+    private Services.BlazorTimer timer;
+
+    private bool refreshComponentsByTimer = false;
+
+    private string sampleDescription => 
+        refreshComponentsByTimer ? "Timer is calling StateHaschanged by itself, you will see new elements appears in the table."
+        : "You have to manually update the component to see the items added by the timer.";
+
+    private string refreshComponentsByTimerButtonText => refreshComponentsByTimer ? "Turn off" : "Turn on";
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.forecasts = await Http.GetJsonAsync<IList<WeatherForecast>>("sample-data/weather.json");
+        this.timer = new Services.BlazorTimer();
+        this.timer.SetTimer(3000);
+        this.timer.OnElapsed += TimerElapsedHandler;
+    }
+
+    private void InvertTimerStateHasChanged()
+    {
+        this.refreshComponentsByTimer = !this.refreshComponentsByTimer;
+    }
+
+    private void TimerElapsedHandler()
+    {
+        Console.WriteLine("TimerElapsedHandler");
+
+        var weatherForecast = new WeatherForecast
+        {
+            Date=DateTime.Now,
+            TemperatureC = new Random().Next(-50, 100),
+            Summary = "Forecast added automatically"
+        };
+
+        forecasts.Add(weatherForecast);
+        nbChanges+=1;
+
+        if(this.refreshComponentsByTimer){
+            StateHasChanged();
+        }
+    }
+
+    public class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public string Summary { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+
+    public void AddForecastWithStateHasChanged()
+    {
+        this.AddForecast();
+
+        StateHasChanged();
+        Console.WriteLine("StateHasChanged was called.");
+    }
+
+    public void AddForecast()
+    {
+        Console.WriteLine("AddForecast was called");
+
+        var weatherForecast = new WeatherForecast
+        {
+            Date=DateTime.Now,
+            TemperatureC = new Random().Next(-50, 100),
+            Summary = "Forecast added manually"
+        };
+
+        this.forecasts.Add(weatherForecast);
+        this.nbChanges+=1;
+    }
+
+    public void Dispose()
+    {
+        this.timer.Dispose();
+        this.timer = null;
+        this.forecasts = null;
+    }
+}

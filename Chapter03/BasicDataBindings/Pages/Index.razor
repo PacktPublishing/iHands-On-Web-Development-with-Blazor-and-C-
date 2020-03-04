@@ -1,0 +1,49 @@
+@page "/"
+
+<h2>Current value of our welcome message:</h2>
+<p>@WelcomeMessage</p>
+
+<h2>Input binded on the 'onchange' event:</h2>
+<input type="text" @bind="WelcomeMessage" />
+
+<hr />
+
+<h2>Input binded on the 'oninput' event:</h2>
+<input type="text" @bind-value="WelcomeMessage" @bind-value:event="oninput" />
+
+<hr />
+
+<h2>Input binded to an integer value:</h2>
+<input @bind="MyAge" />
+<i>The interesting thing here is that only integer values are accepted. Try to enter a string or a decimal to see what happens...</i>
+
+<hr />
+
+<h2>Current date:</h2>
+<i>format: yyyy-MM-dd.</i>
+<br />
+<input @bind="Today" @bind:format="yyyy-MM-dd" />
+<br /><br />
+<i>format: dd/MM/yyyy.</i><br />
+<input @bind="Today" @bind:format="dd/MM/yyyy" />
+<br /><br />
+<i>Input of type 'date'.</i>
+<br />
+<input type="date" @bind="Today" />
+
+
+
+@code {
+
+    public string WelcomeMessage { get; set; }
+
+    public int MyAge { get; set; } = 33;
+
+    public DateTime Today{ get; set; } = DateTime.Now;
+
+    protected override void OnInitialized()
+    {
+        this.WelcomeMessage = "Welcome on our samples about Blazor, an awesome product!";
+    }
+
+}

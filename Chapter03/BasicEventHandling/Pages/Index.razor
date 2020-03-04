@@ -1,0 +1,68 @@
+@page "/"
+
+<h1>Title</h1>
+
+<hr />
+
+<button @onclick="ButtonWasClicked">Click on me!</button>
+<br /><p>@buttonClickCount click(s) on this button.</p>
+
+<hr />
+
+<input @onchange="FirstInputOnChange" @oninput="FirstInputOnInput" />
+<ul>
+    @foreach(var inputStackEntry in firstInputStack)
+    {
+        <li>@inputStackEntry</li>
+    }
+</ul>
+
+<button @onclick="ButtonWasClickedAsync">Click on me!</button>
+<br /><p>@asyncButtonClickCount click(s) on this button.</p>
+
+<hr />
+
+<button @onclick="@(e => ButtonWasClickedAsync(e))">Click on me!</button>
+
+
+@code {
+
+    public string Title { get; set; }
+
+    private int buttonClickCount {get;set;} = 0;
+
+    private int asyncButtonClickCount {get;set;} = 0;
+
+    protected override void OnInitialized()
+    {
+        this.Title = "Welcome on our samples about Blazor, an awesome product!";
+    }
+
+    public void ButtonWasClicked()
+    {
+        Console.WriteLine("ButtonWasClicked");
+        this.buttonClickCount+=1;
+    }
+
+    private List<string> firstInputStack = new List<string>();
+
+    public void FirstInputOnChange()
+    {
+        Console.WriteLine(DateTime.Now + ": FirstInputOnChange");
+        this.firstInputStack.Add(DateTime.Now + ": FirstInputOnChange");
+    }
+
+    public void FirstInputOnInput()
+    {
+        Console.WriteLine(DateTime.Now + ": FirstInputOnInput");
+        this.firstInputStack.Add(DateTime.Now + ": FirstInputOnInput");
+    }
+
+    public async Task ButtonWasClickedAsync(MouseEventArgs e)
+    {
+        Console.WriteLine("ButtonWasClickedAsync");
+        Console.WriteLine(e);
+        this.asyncButtonClickCount+=1;
+    }
+
+}

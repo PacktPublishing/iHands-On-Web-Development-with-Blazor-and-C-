@@ -1,0 +1,22 @@
+<h2>Counter providers</h2>
+<p>Current number: @CurrentNumber</p>
+
+<hr />
+
+<CascadingValue Value="@CurrentNumber">
+    <Counter OnIncrement="Increment" Title="Counter #1" />
+    <Counter OnIncrement="Increment" Title="Counter #2" />
+</CascadingValue>
+
+@code{
+
+    [Parameter]
+    public int CurrentNumber { get;set; }
+
+    public void Increment()
+    {
+        this.CurrentNumber += 1;
+        StateHasChanged();
+    }
+
+}

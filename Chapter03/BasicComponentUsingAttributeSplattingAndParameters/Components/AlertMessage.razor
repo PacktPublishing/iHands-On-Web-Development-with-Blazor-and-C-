@@ -1,0 +1,32 @@
+<div class="msg @this.MessageType">
+	<h3>@this.Title</h3>
+	@this.Content
+</div>
+
+<style type="text/css">
+div.msg{
+	width:50%;height:auto;margin:10px auto;padding:20px;text-align:center;
+	border-style:solid;border-width:3px;border-radius:20px;font-style:italic;
+}
+div.error{
+	font-weight:800;
+	border-color:red;
+}
+div.info{
+	border-color:blue;
+}
+div.warning{
+	border-color:orange;
+}
+</style>
+
+@code{
+	[Parameter]
+	public string Content { get; set; }
+
+	[Parameter]
+	public string Title { get; set; }
+
+	[Parameter]
+	public string MessageType { get; set; }
+}

@@ -1,0 +1,12 @@
+<h2>@Title</h2>
+<i>Date of the message: @this.MessageDate.ToShortDateString()</i>
+
+@code{
+
+    [Parameter]
+    public string Title { get; set; }
+    
+    [CascadingParameter]
+    public DateTime MessageDate { get; set; }
+
+}
