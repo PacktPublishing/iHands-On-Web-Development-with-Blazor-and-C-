@@ -1,0 +1,8 @@
+@page "/"
+@using Services
+@inject BookAuthoringService BookAuthoringService
+
+<h1>Hello, world!</h1>
+
+<p>Book title: @BookAuthoringService.GetBookTitle()</p>
+<p>Author: @BookAuthoringService.GetAuthorName()</p>
