@@ -1,0 +1,32 @@
+@page "/page2"
+@using LifetimesExperiment.Services
+@inject SingletonService SingletonService
+@inject TransientService TransientService
+@inject ScopedService ScopedService
+
+<h1>Page 2</h1>
+
+<div>
+    <h2>Singleton service</h2>
+    <p>Initialized: @SingletonService.GetInitializationDate()</p>
+    <p>Message: @SingletonService.GetMessage()</p>
+</div>
+
+<div>
+    <h2>Transient service</h2>
+    <p>Initialized: @TransientService.GetInitializationDate()</p>
+    <p>Message: @TransientService.GetMessage()</p>
+</div>
+
+<div>
+    <h2>Scoped service</h2>
+    <p>Initialized: @ScopedService.GetInitializationDate()</p>
+    <p>Message: @ScopedService.GetMessage()</p>
+</div>
+
+<ul>
+    <li>
+<a href="/">Go to Index</a></li>
+    <li>
+<a href="/page3">Go to page 3</a></li>
+</ul>

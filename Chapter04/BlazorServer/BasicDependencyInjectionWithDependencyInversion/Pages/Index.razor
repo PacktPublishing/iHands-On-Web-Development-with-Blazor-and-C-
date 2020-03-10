@@ -1,0 +1,9 @@
+﻿@page "/"
+
+@using BasicDependencyInjectionWithDependencyInversion.Services
+@inject IBookAuthoringService BookAuthoringService
+
+<h1>Hello!</h1>
+
+<p>Title: @BookAuthoringService.GetBookTitle()</p>
+<p>Author: @BookAuthoringService.GetAuthorName()</p>

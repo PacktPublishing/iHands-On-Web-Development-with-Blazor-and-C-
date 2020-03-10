@@ -1,0 +1,23 @@
+@page "/"
+@using Services
+@inherits OwningComponentBase
+
+<h1>Hello,</h1>
+<p>Book title: @bookService.GetTitle()</p>
+<br /><p>Author: @authorName</p>
+
+@code {
+
+    IBookService bookService;
+    AuthorService authorService;
+    string authorName;
+
+    protected override void OnInitialized()
+    {
+        this.bookService = (IBookService)ScopedServices.GetService(typeof(IBookService));
+        this.authorService = (AuthorService)ScopedServices.GetService(typeof(AuthorService));
+
+        this.authorName = this.authorService.GetFirstName() + " " + this.authorService.GetLastName();
+    }
+
+}
