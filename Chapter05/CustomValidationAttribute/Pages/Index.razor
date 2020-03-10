@@ -1,0 +1,46 @@
+﻿@page "/"
+@using CustomValidationAttribute.Model
+
+<EditForm Model="@book" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="title">Title</label>
+        <InputText id="title" @bind-Value="book.Title" Class="form-control" />
+        <ValidationMessage For="() => book.Title" />
+    </div>
+    <div class="form-group">
+        <label for="title2">Title 2</label>
+        <InputText id="title2" @bind-Value="book.Title2" Class="form-control" />
+        <ValidationMessage For="() => book.Title2" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+
+    private Book book = new Book();
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("Valid submission.");
+
+        Console.WriteLine(this.GetBookDataFormattedToString());
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        Console.WriteLine("Invalid submission.");
+
+        Console.WriteLine(this.GetBookDataFormattedToString());
+    }
+
+    private string GetBookDataFormattedToString()
+    {
+        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder("Book data:");
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.Title), this.book.Title);
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.Title2), this.book.Title2);
+        return stringBuilder.ToString();
+    }
+
+}
