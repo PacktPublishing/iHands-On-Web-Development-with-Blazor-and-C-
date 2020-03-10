@@ -1,0 +1,27 @@
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+
+@typeparam TItem
+
+<label for="@fortag">@label</label>
+
+@code {
+
+    // This component is necessary while the feature isn't supported by Blazor. 
+    // There are two issues about this:
+    //     Issue#12572: https://github.com/dotnet/aspnetcore/issues/12572
+    //     Issue#18016: https://github.com/dotnet/aspnetcore/issues/18016
+
+    [Parameter] public string aspfor { get; set; }        
+
+    private string label => GetDisplayName(aspfor);
+
+    private string fortag => aspfor;
+
+    private string GetDisplayName(string propertyname)
+    {
+        MemberInfo myprop = typeof(TItem).GetProperty(propertyname) as MemberInfo;
+        var dd = myprop.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+        return dd?.Name ?? string.Empty;
+    }
+}

@@ -1,0 +1,135 @@
+﻿@page "/"
+@using BasicForm.Model
+
+<EditForm Model="@book" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="title">Title</label>
+        <InputText id="title" @bind-Value="book.Title" Class="form-control" />
+        <ValidationMessage For="() => book.Title" />
+    </div>
+    <div class="form-group">
+        <LabelText TItem="Book" aspfor="@nameof(book.Published)" />
+        <InputDate @bind-Value="book.Published" Class="form-control" />
+        <ValidationMessage For="() => book.Published" />
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <InputTextArea id="description" @bind-Value="book.Description" Class="form-control" />
+        <ValidationMessage For="() => book.Description" />
+    </div>
+    <div class="form-group">
+        <label for="pagecount">Page count</label>
+        <InputNumber id="pagecount" @bind-Value="book.PageCount" Class="form-control" />
+        <ValidationMessage For="() => book.PageCount" />
+    </div>
+    <div class="form-group">
+        <LabelText TItem="Book" aspfor="@nameof(book.AuthorName)" />
+        <InputText @bind-Value="book.AuthorName" />
+        <ValidationMessage For="() => book.AuthorName" />
+    </div>
+    <div class="form-group">
+        <LabelText TItem="Book" aspfor="@nameof(book.Price)" />
+        <InputNumber @bind-Value="book.Price" />
+        <ValidationMessage For="() => book.Price" />
+    </div>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <InputSelect id="category" @bind-Value="book.CategoryId" Class="form-control">
+            <option value="" selected disabled>-- Select a category --</option>
+        @foreach(var category in this.categories)
+        {
+            <option value="@category.Id">@category.Name</option>
+        }
+        </InputSelect>
+        <ValidationMessage For="() => book.CategoryId" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(book.BookType)">BookType</label>
+        <InputSelect 
+            id="@nameof(book.BookType)" 
+            Value="bookTypeSelectedValue" 
+            ValueChanged="@((BookType bookType) => OnBookTypeChanged(bookType))" 
+            ValueExpression="@(() => bookTypeSelectedValue)"
+            Class="form-control">
+            <option value="" selected disabled>-- Select a type --</option>
+            <option value="@(BookType.Ebook)">e-Book</option>
+            <option value="@(BookType.Printed)">Printed</option>
+            <option value="@(BookType.Both)">Printed & e-Book</option>
+        </InputSelect>
+        <ValidationMessage For="() => book.BookType" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(book.Language)">Language</label>
+        <InputSelect @bind-Value="book.Language" Class="form-control">
+            <option value="" selected disabled>-- Select a language --</option>
+            <option value="@(Language.English)">English</option>
+            <option value="@(Language.French)">French</option>
+        </InputSelect>
+        <ValidationMessage For="() => book.Language" />
+    </div>
+    <div class="form-group">
+        <label for="@nameof(book.IsCurrentlyInReview)">Is currently in review</label>
+        <InputCheckbox id="@nameof(book.IsCurrentlyInReview)" @bind-Value="book.IsCurrentlyInReview" Class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+
+    private IEnumerable<BookCategory> categories = new List<BookCategory>()
+        {
+            new BookCategory{ Id = 1, Name = "Computers & Technology" },
+            new BookCategory{ Id = 2, Name = "Literature" },
+            new BookCategory{ Id = 3, Name = "Children" }
+        };
+
+    private Book book = new Book();
+
+    private BookType bookTypeSelectedValue;
+
+    protected override void OnInitialized()
+    {
+        this.bookTypeSelectedValue = this.book.BookType;
+    }
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("Valid submission.");
+
+        Console.WriteLine(this.GetBookDataFormattedToString());
+    }
+
+    private void HandleInvalidSubmit()
+    {
+        Console.WriteLine("Invalid submission.");
+
+        Console.WriteLine(this.GetBookDataFormattedToString());
+    }
+
+    private string GetBookDataFormattedToString()
+    {
+        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder("Book data:");
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.Title), this.book.Title);
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.Published), this.book.Published);
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.Description), this.book.Description);
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.PageCount), this.book.PageCount);
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.AuthorName), this.book.AuthorName);
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.Price), this.book.Price);
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.CategoryId), this.book.CategoryId);
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.BookType), this.book.BookType);
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.IsCurrentlyInReview), this.book.IsCurrentlyInReview);
+        stringBuilder.AppendFormat("{0} ---- {1}: {2}", "\n", nameof(this.book.Language), this.book.Language);
+        return stringBuilder.ToString();
+    }
+
+    // This method could be asynchronous.
+    // => private async Task OnBookTypeChanged(BookType newBookType)
+    private void OnBookTypeChanged(BookType newBookType)
+    {
+        Console.WriteLine("OnBookTypeChanged was called. New book type: " + newBookType);
+        this.bookTypeSelectedValue = this.book.BookType = newBookType;
+    }
+
+}
